@@ -1,0 +1,66 @@
+# Spring MVC 的优点
+
+- 可以支持各种视图技术而不仅仅局限于JSP ;
+- 与Spring 框架集成
+- 有清晰的角色分配
+- 支持各种请求资源的映射策略。
+
+# MVC 是什么？ MVC 设计模式的好处有哪些
+
+mvc 是一种设计模式（设计模式就是日常开发中编写代码的一种好的方法和经 验的总结）。模型(model)－视图(view)－控制器(controller) ， 三层架构 的设计模式。用于实现前端页面的展现与后端业务数据处理的分离。
+
+# 简单的谈一下SpringMVC的工作流程
+
+1、用户发送请求至前端控制器DispatcherServlet
+2、DispatcherServlet收到请求调用HandlerMapping处理器映射器。
+3、处理器映射器找到具体的处理器，生成处理器对象及处理器拦截器(如果有则生成)一并返回给DispatcherServlet。
+4、DispatcherServlet调用HandlerAdapter处理器适配器
+5、HandlerAdapter经过适配调用具体的处理器(Controller，也叫后端控制器)。
+6、Controller执行完成返回ModelAndView
+7、HandlerAdapter将controller执行结果ModelAndView返回给DispatcherServlet
+8、DispatcherServlet将ModelAndView传给ViewReslover视图解析器
+9、ViewReslover解析后返回具体View
+10、DispatcherServlet根据View进行渲染视图（即将模型数据填充至视图中）。
+11、DispatcherServlet响应用户
+
+# Spring MVC 的控制器是不是单例模式，如果是，有什么问题怎么解决？
+
+是单例模式，所以在多线程访问的时候有线程安全问题不要用同步，会影响性 能的，解决方案是在控制器里面不写成员变量。
+
+# 什么是DispatcherServlet
+
+Spring 的MVC 框架是围绕DispatcherServlet 来设计的， 它用来处理所有的HTTP 请求和响应。
+
+> 为什么设计成单例设计模式?
+
+1.性能(不用每次请求都创建对象)
+
+2.不需要多例(不要在控制器中定义成员变量)
+
+# 几个常用注解
+
+- @RequestMapping: 用千处理请求url 映射的注解， 可用千类或方法上。用 千类上，则表示类中的所有响应请求的方法都是以该地址作为父路径。
+- @RequestBody 注解实现接收http 请求的json 数据， 将json 转换为Java对象。
+- @ResponseBody注解实现将conreoller 方法返回对象转化为json 对象响应给客户。
+- @Conntroller : 控制器的注解， 表示是表现层不能用用别的注解代替
+
+# 说出SpringMVC常用的5个注解？如何使用 SpringMVC完成JSON操作？：
+
+常用的 5 个注解 @RequestMapping 、 @PathVariable 、 @RequestParam 、 @RequestBody 、@ResponseBody
+
+> 如何使用 SpringMVC 完成 JSON 操作：
+
+①. 配置 MappingJacksonHttpMessageConverter
+②. 使用 @RequestBody 注解或 ResponseEntity 作为返回值
+
+# SpringMVC怎么样设定重定向和转发的？
+
+在返回值前面加"forward:“就可以让结果转发,譬如"forward:user.do?name=method4” 在返回值前面加"redirect:“就可以让返回值重定向,譬如"redirect:http://www.baidu.com”
+
+# 怎么样在方法里面得到Request,或者Session？
+
+直接在方法的形参中声明request,SpringMvc就自动把request对象传入
+
+# SpingMvc 中的控制器的注解一般用哪个，有没有别的注解可以替代？
+
+＠ RestController = ＠ResponseBody + @Controller
